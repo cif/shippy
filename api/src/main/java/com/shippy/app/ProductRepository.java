@@ -1,7 +1,9 @@
-package com.shippy.app.repository;
+package com.shippy.app;
+
 import com.shippy.app.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> { }
+public interface ProductRepository extends JpaRepository<Product, Long> {
+}

@@ -1,11 +1,11 @@
-package com.shippy.app.controller;
+package com.shippy.app;
 
 // import com.shippy.app.exception.ProductNotFoundException;
 import com.shippy.app.model.Product;
-import com.shippy.app.repository.ProductRepository;
+import com.shippy.app.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.validation.Valid;
@@ -17,6 +17,8 @@ public class ProductService {
   @Autowired
   ProductRepository productRepository;
 
+  @Autowired
+  private RedisTemplate<String, String> redis;
   Logger logger = LoggerFactory.getLogger(ProductService.class);
 
   @GetMapping("/products")
@@ -26,6 +28,10 @@ public class ProductService {
 
   @PostMapping("/products")
   public Product validateProduct(@Valid @RequestBody Product product) {
+    if (!redis.hasKey("test")) {
+      product.setIsEligible(true);
+      redis.opsForList().leftPush("test", "cool");
+    }
     return productRepository.save(product);
   }
 }

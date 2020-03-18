@@ -1,6 +1,5 @@
 package com.shippy.app.model;
 
-import com.shippy.app.model.ProductCategory;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
