@@ -1,9 +1,12 @@
 package com.shippy.app.model;
 
+import com.shippy.app.model.ProductCategory;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
+import lombok.Builder.Default;
 
 @Data
 @Entity
@@ -24,6 +27,9 @@ public class Product {
 
   @NotNull
   private Double price;
+
+  @Default
+  private Boolean isEligible = false;
 
   public Product() {
     super();
