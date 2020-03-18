@@ -46,7 +46,7 @@ public class ProductShippingEligibility {
     RedissonClient redisson = Redisson.create(conf);
     RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
     ShippingConfiguration shippingConfig = configMap.get(SHIPPING_CONFIG_MAP_KEY);
-    // return defaults if redis goes away
+    // return defaults if redis ran away
     if (null == shippingConfig) {
       shippingConfig = new ShippingConfiguration();
     }
