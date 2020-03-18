@@ -1,6 +1,12 @@
 package com.shippy.app;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import com.shippy.app.model.Product;
+import com.shippy.app.model.ProductCategory;
 import com.shippy.app.model.ShippingConfiguration;
 
 import org.redisson.Redisson;
@@ -21,11 +27,17 @@ public class ProductShippingEligibility {
   public Boolean isElisibleForFreeShiping(Product product) {
     // fetch configuration from redis
     ShippingConfiguration config = getCurrentShippingRequirementsConfig();
-    return config.getMinimumPrice() <= product.getPrice();
-  }
 
-  public void updateValidCategories() {
-    // TODO:
+    // convert categories to list
+    List<ProductCategory> acceptableCategories = Arrays.asList(config.getCategories());
+    System.out.println("ACCEPTABLE CATEGORIES ARE");
+    List<String> cats = Arrays.stream(config.getCategories()).map(cat ->
+      cat.toString()
+    ).collect(Collectors.toList());
+    System.out.println(cats);
+    return
+      acceptableCategories.contains(product.getCategory()) &&
+      config.getMinimumPrice() <= product.getPrice();
   }
 
   public ShippingConfiguration updateConfiguration (ShippingConfiguration newConfig) {

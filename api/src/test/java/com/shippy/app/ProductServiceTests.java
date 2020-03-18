@@ -4,7 +4,6 @@ import com.shippy.app.model.Product;
 import com.shippy.app.model.ProductCategory;
 import com.shippy.app.model.ShippingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javassist.expr.NewArray;
-
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -81,10 +74,9 @@ public class ProductServiceTests {
 
 	@Test
 	public void productPriceDeterminesCorrectEligibility() throws Exception {
-		// set the price high
-		List<ProductCategory> categories = new ArrayList<ProductCategory>();
-		categories.add(ProductCategory.OUTERWEAR);
-		ShippingConfiguration config = new ShippingConfiguration(200.09, categories);
+		// given default price is 100
+		// and categories default to full enum values
+		ShippingConfiguration config = new ShippingConfiguration();
 		this.mockMvc.perform(
 			post("/products/config/update")
 				.contentType("application/json")
@@ -92,6 +84,7 @@ public class ProductServiceTests {
 		)
 		.andExpect(status().is(200));
 
+		// set the price too low, expect false
 		Product tooLow = new Product(
 			"test.product",
 			"test.seller",
@@ -106,6 +99,7 @@ public class ProductServiceTests {
 		.andExpect(status().is(200))
 		.andExpect(jsonPath("$.isEligible", is(false)));
 
+		// meet the price threshold
 		Product highEnough = new Product(
 			"test.product",
 			"test.seller",
@@ -119,5 +113,51 @@ public class ProductServiceTests {
 		)
 		.andExpect(status().is(200))
 		.andExpect(jsonPath("$.isEligible", is(true)));
+	}
+
+	@Test
+	public void productCategoryDeterminesEligibility() throws Exception {
+		// given, updated configuration to
+		// only accept fly fishing or skiing gear
+		ShippingConfiguration config = new ShippingConfiguration(
+			100.0,
+			new ProductCategory[] { ProductCategory.FLY_FISHING, ProductCategory.SKIING }
+		);
+		this.mockMvc.perform(
+			post("/products/config/update")
+				.contentType("application/json")
+				.content(asJsonString(config))
+		)
+		.andExpect(status().is(200));
+
+		// good category, above price
+		Product happyCategory = new Product(
+			"test.product",
+			"test.seller",
+				ProductCategory.SKIING,
+				101.10
+		);
+		this.mockMvc.perform(
+			post("/products")
+				.contentType("application/json")
+				.content(asJsonString(happyCategory))
+		)
+		.andExpect(status().is(200))
+		.andExpect(jsonPath("$.isEligible", is(true)));
+
+		// category not in config but high enough price
+		Product sadCategory = new Product(
+			"test.product",
+			"test.seller",
+				ProductCategory.SURFING,
+				101.10
+		);
+		this.mockMvc.perform(
+			post("/products")
+				.contentType("application/json")
+				.content(asJsonString(sadCategory))
+		)
+		.andExpect(status().is(200))
+		.andExpect(jsonPath("$.isEligible", is(false)));
 	}
 }

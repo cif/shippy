@@ -1,6 +1,7 @@
 package com.shippy.app;
 
 import com.shippy.app.model.Product;
+import com.shippy.app.model.ProductCategory;
 import com.shippy.app.model.ShippingConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class ProductService {
   @GetMapping("/products")
   public List<Product> getAllProducts() {
     return productRepository.findAll();
+  }
+
+  @GetMapping("/categories")
+  public ProductCategory[] getCategories() {
+    return ProductCategory.values();
   }
 
   @PostMapping("/products")

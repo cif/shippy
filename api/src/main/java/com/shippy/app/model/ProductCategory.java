@@ -1,5 +1,10 @@
 package com.shippy.app.model;
 
 public enum ProductCategory {
-  OUTERWEAR
+  OUTERWEAR,
+  FLY_FISHING,
+  SURFING,
+  SNOWBOARDING,
+  SKIING,
+  SPEEDFLYING
 }

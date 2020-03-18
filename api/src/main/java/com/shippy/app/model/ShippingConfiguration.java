@@ -1,7 +1,5 @@
 package com.shippy.app.model;
 
-import java.util.List;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +20,7 @@ public class ShippingConfiguration {
   private Double minimumPrice = 100.00;
 
   @NotEmpty
-  private List<ProductCategory> categories;
+  @Default
+  private ProductCategory[] categories = ProductCategory.values();
 
 }
