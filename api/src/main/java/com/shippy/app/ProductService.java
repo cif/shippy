@@ -1,7 +1,7 @@
 package com.shippy.app;
 
 import com.shippy.app.model.Product;
-import com.shippy.app.model.ShippingConfigurationRequest;
+import com.shippy.app.model.ShippingConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,8 @@ public class ProductService {
   @Autowired
   ProductRepository productRepository;
 
-  ProductShippingEligibility eligibilityServcie;
+  @Autowired
+  ProductShippingEligibility eligibilityService;
 
   Logger logger = LoggerFactory.getLogger(ProductService.class);
 
@@ -28,14 +29,13 @@ public class ProductService {
   @PostMapping("/products")
   public Product validateProduct(@Valid @RequestBody Product product) {
     // use the eligibility servcie to to determine if
-    // the product is eligible for free shipping
-    product.setIsEligible(eligibilityServcie.isElisibleForFreeShiping(product));
+    // the product is eligible for free shipping and persist
+    product.setIsEligible(eligibilityService.isElisibleForFreeShiping(product));
     return productRepository.save(product);
   }
 
   @PostMapping("/products/config/update")
-  public ShippingConfigurationRequest updateMinimumPrice(@Valid @RequestBody ShippingConfigurationRequest req) {
-
-    return req;
+  public ShippingConfiguration updateShippingConfiguration(@Valid @RequestBody ShippingConfiguration req) {
+    return eligibilityService.updateConfiguration(req);
   }
 }

@@ -1,36 +1,55 @@
-import java.nio.ByteBuffer;
-import java.util.concurrent.TimeUnit;
+package com.shippy.app;
 
 import com.shippy.app.model.Product;
+import com.shippy.app.model.ShippingConfiguration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.redisson.Redisson;
+import org.redisson.api.RMap;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-import io.netty.buffer.ByteBuf;
-
-
-
+@Service
 public class ProductShippingEligibility {
 
-  private static final String MININUM_PRICE_KEY = "MINIMUM_PRICE";
+  private static final String SHIPPING_CONFIG_MAP_KEY = "SHIPPING_CONFIG";
 
-  @Autowired
-  private RedisTemplate<String, String> redis;
-
+  @Value("${redis.connection}")
+  private String redisConnection;
 
   public Boolean isElisibleForFreeShiping(Product product) {
-    return true;
+    // fetch configuration from redis
+    ShippingConfiguration config = getCurrentShippingRequirementsConfig();
+    return config.getMinimumPrice() <= product.getPrice();
   }
 
   public void updateValidCategories() {
     // TODO:
   }
 
-  public Double updateMinimumPriceThreshold (Double price) {
-    ByteBuffer buffer = ByteBuffer.allocate(price.BYTES);
-    buffer.putDouble(price);
-    redis.restore(MININUM_PRICE_KEY, buffer.array(), 0, TimeUnit.NANOSECONDS, true);
-    return price;
+  public ShippingConfiguration updateConfiguration (ShippingConfiguration newConfig) {
+    Config conf = new Config();
+    conf.useSingleServer().setAddress(redisConnection);
+
+    RedissonClient redisson = Redisson.create(conf);
+    RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
+    ShippingConfiguration updated = configMap.put(SHIPPING_CONFIG_MAP_KEY, newConfig);
+    return updated;
   }
 
+  private ShippingConfiguration getCurrentShippingRequirementsConfig() {
+    // get the configured price from redis
+    Config conf = new Config();
+    conf.useSingleServer().setAddress(redisConnection);
+
+    RedissonClient redisson = Redisson.create(conf);
+    RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
+    ShippingConfiguration shippingConfig = configMap.get(SHIPPING_CONFIG_MAP_KEY);
+    // return defaults if redis goes away
+    if (null == shippingConfig) {
+      shippingConfig = new ShippingConfiguration();
+    }
+    return shippingConfig;
+  }
 }
