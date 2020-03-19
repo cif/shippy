@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
-// import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
