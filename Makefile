@@ -12,17 +12,17 @@ down:
 test:
 	export MYSQL_HOST=localhost && \
 	export REDIS_HOST=localhost && \
-	cd api && \
+	cd shipping && \
 	./mvnw test
 
 dev:
 	export MYSQL_HOST=localhost && \
 	export REDIS_HOST=localhost && \
-	cd api && \
+	cd shipping && \
 	./mvnw spring-boot:run
 
 clean:
-	cd api && \
+	cd shipping && \
 	./mvnw clean install
 
 docs:

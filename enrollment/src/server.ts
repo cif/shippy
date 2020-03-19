@@ -7,6 +7,8 @@ const log = logger('app:service')
 async function main() {
   // attempt to create mysql database and table
   if (process.env.NODE_ENV !== 'production') {
+    // FIXME: this should be some kind of migration library/fully baked solution
+    // but is at the same time a great minimalist demonstration.
     await query(`
      CREATE TABLE IF NOT EXISTS enrollment (
         id int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -20,7 +22,7 @@ async function main() {
   // Start the server
   const port = process.env.PORT || 3001
   app.listen(port as number, '0.0.0.0', () => {
-    log(`Service started on ${port}`)
+    log(`started on ${port}`)
   })
 }
 

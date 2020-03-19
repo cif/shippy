@@ -24,11 +24,11 @@ services:
   api:
     container_name: 'shippy-api'
     build:
-      context: ./api
+      context: ./shipping
     volumes:
-      - ./api/src/:/app/src/
-      - ./api/target/:/app/target/
-      - ./api/pom.xml:/app/pom.xml
+      - ./shipping/src/:/app/src/
+      - ./shipping/target/:/app/target/
+      - ./shipping/pom.xml:/app/pom.xml
     environment:
       - MYSQL_HOST=mysql
       - REDIS_HOST=redis

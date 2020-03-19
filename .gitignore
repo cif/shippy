@@ -1,5 +1,5 @@
 .DS_Store
-api/target
+shipping/target
 .data/
 .redis/
 .vscode/
