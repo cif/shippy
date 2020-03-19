@@ -1,6 +1,6 @@
 version: '3.0'
 services:
-  db:
+  mysql:
     image: mysql:5.7
     ports:
       - "3306:3306"
@@ -20,3 +20,18 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - ./.redis:/data
+
+  api:
+    container_name: 'shippy-api'
+    build:
+      context: ./api
+    volumes:
+      - ./api/src/:/app/src/
+      - ./api/target/:/app/target/
+      - ./api/pom.xml:/app/pom.xml
+    ports:
+      - "8080:8080"
+    entrypoint: ["mvn", "spring-boot:run"]
+    depends_on:
+      - redis
+      - mysql
