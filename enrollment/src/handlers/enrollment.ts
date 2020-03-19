@@ -68,13 +68,17 @@ export const getEnrollmentStatus = async (req: Request, resp: Response) => {
   )
 
   if (!existing) {
+    log(`${sellerUsername} is not enrolled`)
     resp.json({
       isEnrolled: false,
     })
+    return
   }
 
-  resp.json(resp.json({
-    // cheap js bool casting
-    isEnrolled: !!existing.isEnrolled,
-  }))
+  // cheap js bool casting
+  const isEnrolled = !!existing.isEnrolled
+  log(`${sellerUsername} status enrolled=${isEnrolled}`)
+  resp.json({
+    isEnrolled,
+  })
 }

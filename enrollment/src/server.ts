@@ -1,22 +1,16 @@
 import { app } from './app'
+import { bootstrap } from './bootstrap'
 import { logger } from './util/logger'
-import { query } from './util/query'
 
-const log = logger('app:service')
+const log = logger('app:service-statup')
 
 async function main() {
+  log(`starting service...`)
   // attempt to create mysql database and table
   if (process.env.NODE_ENV !== 'production') {
     // FIXME: this should be some kind of migration library/fully baked solution
     // but is at the same time a great minimalist demonstration.
-    await query(`
-     CREATE TABLE IF NOT EXISTS enrollment (
-        id int(11) unsigned NOT NULL AUTO_INCREMENT,
-        sellerUsername varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-        isEnrolled tinyint(1) DEFAULT 0,
-        PRIMARY KEY (id)
-      ) ;
-    `)
+    await bootstrap()
   }
 
   // Start the server

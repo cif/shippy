@@ -2,7 +2,7 @@ require('dotenv').config({
   path: `${__dirname}/../.env`
 })
 
-import express, { Response } from 'express'
+import express, { Response, NextFunction } from 'express'
 import { getEnrollmentStatus, postEnrollment } from './handlers/enrollment'
 import body from 'body-parser'
 import async from 'express-async-handler'
@@ -25,8 +25,8 @@ app.get('/', (_: undefined, res: Response) => {
 })
 
 // error handler
-app.use((err: Error, req: Request, resp: Response) => {
-  log(`application error`, err)
+app.use((err: Error, req: Request, resp: Response, next: NextFunction) => {
+  log(`application error`, err.stack)
   resp
     .status(500)
     .send('An application error occurred. Please try again later')

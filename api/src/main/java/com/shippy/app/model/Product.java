@@ -5,12 +5,18 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import lombok.Builder.Default;
 
 @Data
 @Entity
 @Table(name = "products")
 public class Product {
+
+  public enum EligibilityStatus {
+    SELLER_NOT_ENROLLED,
+    PRICE_DOES_NOT_MEET_THRESHOLD,
+    PRODUCT_CATEGORY_EXCLUDED
+  }
+
   @Id
   @GeneratedValue
   private Long id;
@@ -27,8 +33,9 @@ public class Product {
   @NotNull
   private Double price;
 
-  @Default
   private Boolean isEligible = false;
+
+  public EligibilityStatus eligibilityStatus;
 
   public Product() {
     super();

@@ -54,7 +54,7 @@ public class ProductServiceTests {
 	public void acceptsGoodPost() throws Exception {
 		Product goodOne = new Product(
 			"test.title",
-			"test.seller",
+			"spring.test.seller",
 			 ProductCategory.OUTERWEAR,
 			 15.55
 		);
@@ -88,25 +88,10 @@ public class ProductServiceTests {
 		)
 		.andExpect(status().is(200));
 
-		// set the price too low, expect false
-		Product tooLow = new Product(
-			"test.product",
-			"test.seller",
-				ProductCategory.OUTERWEAR,
-				9.99
-		);
-		this.mockMvc.perform(
-			post("/products")
-				.contentType("application/json")
-				.content(asJsonString(tooLow))
-		)
-		.andExpect(status().is(200))
-		.andExpect(jsonPath("$.isEligible", is(false)));
-
 		// meet the price threshold
 		Product highEnough = new Product(
 			"test.product",
-			"test.seller",
+			"spring.test.seller",
 				ProductCategory.OUTERWEAR,
 				99999999.99
 		);
@@ -117,6 +102,25 @@ public class ProductServiceTests {
 		)
 		.andExpect(status().is(200))
 		.andExpect(jsonPath("$.isEligible", is(true)));
+
+		// set the price too low, expect false
+		Product tooLow = new Product(
+			"test.product",
+			"spring.test.seller",
+				ProductCategory.OUTERWEAR,
+				9.99
+		);
+		this.mockMvc.perform(
+			post("/products")
+				.contentType("application/json")
+				.content(asJsonString(tooLow))
+		)
+		.andExpect(status().is(200))
+		.andExpect(jsonPath("$.isEligible", is(false)))
+		.andExpect(jsonPath(
+			"$.eligibilityStatus",
+			is(Product.EligibilityStatus.PRICE_DOES_NOT_MEET_THRESHOLD.toString())
+		));
 	}
 
 	@Test
@@ -137,7 +141,7 @@ public class ProductServiceTests {
 		// good category, above price
 		Product happyCategory = new Product(
 			"test.product",
-			"test.seller",
+			"spring.test.seller",
 				ProductCategory.SKIING,
 				101.10
 		);
@@ -152,9 +156,9 @@ public class ProductServiceTests {
 		// category not in config but high enough price
 		Product sadCategory = new Product(
 			"test.product",
-			"test.seller",
-				ProductCategory.SURFING,
-				101.10
+			"spring.test.seller",
+			ProductCategory.SURFING,
+			101.10
 		);
 		this.mockMvc.perform(
 			post("/products")
@@ -162,7 +166,46 @@ public class ProductServiceTests {
 				.content(asJsonString(sadCategory))
 		)
 		.andExpect(status().is(200))
-		.andExpect(jsonPath("$.isEligible", is(false)));
+		.andExpect(jsonPath("$.isEligible", is(false)))
+		.andExpect(jsonPath(
+			"$.eligibilityStatus",
+			is(Product.EligibilityStatus.PRODUCT_CATEGORY_EXCLUDED.toString())
+		));
+	}
+
+	@Test
+	public void notEnrolledScenario() throws Exception {
+		// given, updated configuration to
+		// only accept fly fishing or skiing gear
+		ShippingConfiguration config = new ShippingConfiguration(
+			100.0,
+			new ProductCategory[] { ProductCategory.FLY_FISHING, ProductCategory.SKIING }
+		);
+		this.mockMvc.perform(
+			put("/products/config")
+				.contentType("application/json")
+				.content(asJsonString(config))
+		)
+		.andExpect(status().is(200));
+
+		// good category, above price
+		Product happyCategory = new Product(
+			"test.product",
+			"spring.test.seller.unenrolled",
+			ProductCategory.SKIING,
+			101.10
+		);
+		this.mockMvc.perform(
+			post("/products")
+				.contentType("application/json")
+				.content(asJsonString(happyCategory))
+		)
+		.andExpect(status().is(200))
+		.andExpect(jsonPath("$.isEligible", is(false)))
+		.andExpect(jsonPath(
+			"$.eligibilityStatus",
+			is(Product.EligibilityStatus.SELLER_NOT_ENROLLED.toString())
+		));
 	}
 
 	@Test

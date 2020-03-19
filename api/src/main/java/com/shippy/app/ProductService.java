@@ -32,17 +32,20 @@ public class ProductService {
   public Product validateProduct(@Valid @RequestBody Product product) {
     // use the eligibility servcie to to determine if
     // the product is eligible for free shipping and persist
-    product.setIsEligible(eligibilityService.isElisibleForFreeShiping(product));
-    return productRepository.save(product);
+    logger.info("Checking if product is eligible and adding to history");
+    Product eligibleProduct = eligibilityService.determineProductEligibility(product);
+    return productRepository.save(eligibleProduct);
   }
 
   @GetMapping("/products/config")
   public ShippingConfiguration getShippingConfiguration() {
+    logger.info("Fetching eligibility configuration");
     return eligibilityService.getShippingConfiguration();
   }
 
   @PutMapping("/products/config")
   public ShippingConfiguration updateShippingConfiguration(@Valid @RequestBody ShippingConfiguration req) {
+    logger.info("Saving new eligibility configuation");
     return eligibilityService.updateConfiguration(req);
   }
 

@@ -11,6 +11,9 @@ import org.redisson.Redisson;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +25,22 @@ public class EligibilityService {
   @Value("${redis.connection}")
   private String redisConnection;
 
-  public Boolean isElisibleForFreeShiping(Product product) {
+  @Autowired
+  private EnrollmentDelegate enrollmentServiceDelegate;
+
+  Logger logger = LoggerFactory.getLogger(EligibilityService.class);
+
+  public Product determineProductEligibility(Product product) {
+    logger.info("Determining eligibility for product: " + product.getTitle());
+
+    // see if the user is enrolled in free shipping program via delegate
+    if (!enrollmentServiceDelegate.isUserEnrolled(product.getSeller())) {
+      logger.info("Seller is not enrolled in the enrollemnt service");
+      product.setEligibilityStatus(Product.EligibilityStatus.SELLER_NOT_ENROLLED);
+      product.setIsEligible(false);
+      return product;
+    }
+
     // fetch configuration from redis
     ShippingConfiguration config = getShippingConfiguration();
 
@@ -33,9 +51,20 @@ public class EligibilityService {
     //   cat.toString()
     // ).collect(Collectors.toList());
     // System.out.println(cats);
-    return
-      acceptableCategories.contains(product.getCategory()) &&
-      config.getMinimumPrice() <= product.getPrice();
+    if (!acceptableCategories.contains(product.getCategory())) {
+      product.setEligibilityStatus(Product.EligibilityStatus.PRODUCT_CATEGORY_EXCLUDED);
+      product.setIsEligible(false);
+      return product;
+    }
+
+    if (config.getMinimumPrice() > product.getPrice()) {
+      product.setEligibilityStatus(Product.EligibilityStatus.PRICE_DOES_NOT_MEET_THRESHOLD);
+      product.setIsEligible(false);
+      return product;
+    }
+
+    product.setIsEligible(true);
+    return product;
   }
 
   public ShippingConfiguration updateConfiguration (ShippingConfiguration newConfig) {
