@@ -40,6 +40,11 @@ public class ProductService {
     return productRepository.save(product);
   }
 
+  @GetMapping("/products/config")
+  public ShippingConfiguration getShippingConfiguration() {
+    return eligibilityService.getShippingConfiguration();
+  }
+
   @PostMapping("/products/config/update")
   public ShippingConfiguration updateShippingConfiguration(@Valid @RequestBody ShippingConfiguration req) {
     return eligibilityService.updateConfiguration(req);

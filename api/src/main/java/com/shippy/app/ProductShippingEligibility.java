@@ -26,42 +26,43 @@ public class ProductShippingEligibility {
 
   public Boolean isElisibleForFreeShiping(Product product) {
     // fetch configuration from redis
-    ShippingConfiguration config = getCurrentShippingRequirementsConfig();
+    ShippingConfiguration config = getShippingConfiguration();
 
     // convert categories to list
     List<ProductCategory> acceptableCategories = Arrays.asList(config.getCategories());
-    System.out.println("ACCEPTABLE CATEGORIES ARE");
-    List<String> cats = Arrays.stream(config.getCategories()).map(cat ->
-      cat.toString()
-    ).collect(Collectors.toList());
-    System.out.println(cats);
+    // System.out.println("ACCEPTABLE CATEGORIES ARE");
+    // List<String> cats = Arrays.stream(config.getCategories()).map(cat ->
+    //   cat.toString()
+    // ).collect(Collectors.toList());
+    // System.out.println(cats);
     return
       acceptableCategories.contains(product.getCategory()) &&
       config.getMinimumPrice() <= product.getPrice();
   }
 
   public ShippingConfiguration updateConfiguration (ShippingConfiguration newConfig) {
-    Config conf = new Config();
-    conf.useSingleServer().setAddress(redisConnection);
-
-    RedissonClient redisson = Redisson.create(conf);
+    RedissonClient redisson = getRedisClient();
     RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
     ShippingConfiguration updated = configMap.put(SHIPPING_CONFIG_MAP_KEY, newConfig);
     return updated;
   }
 
-  private ShippingConfiguration getCurrentShippingRequirementsConfig() {
+  public ShippingConfiguration getShippingConfiguration() {
     // get the configured price from redis
-    Config conf = new Config();
-    conf.useSingleServer().setAddress(redisConnection);
-
-    RedissonClient redisson = Redisson.create(conf);
+    RedissonClient redisson = getRedisClient();
     RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
     ShippingConfiguration shippingConfig = configMap.get(SHIPPING_CONFIG_MAP_KEY);
-    // return defaults if redis ran away
+
+    // just return defaults if redis ran away
     if (null == shippingConfig) {
       shippingConfig = new ShippingConfiguration();
     }
     return shippingConfig;
+  }
+
+  private RedissonClient getRedisClient() {
+    Config conf = new Config();
+    conf.useSingleServer().setAddress(redisConnection);
+    return Redisson.create(conf);
   }
 }
