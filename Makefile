@@ -12,17 +12,22 @@ down:
 test:
 	export MYSQL_HOST=localhost && \
 	export REDIS_HOST=localhost && \
-	cd shipping && \
+	export ENROLLMENT_ENDPOINT=http://localhost:3001/enroll/status/ && \
+	cd api && \
 	./mvnw test
 
 dev:
 	export MYSQL_HOST=localhost && \
 	export REDIS_HOST=localhost && \
-	cd shipping && \
+	export ENROLLMENT_ENDPOINT=http://localhost:3001/enroll/status/ && \
+	cd api && \
 	./mvnw spring-boot:run
 
 clean:
-	cd shipping && \
+	export MYSQL_HOST=localhost && \
+	export REDIS_HOST=localhost && \
+	export ENROLLMENT_ENDPOINT=http://localhost:3001/enroll/status/ && \
+	cd api && \
 	./mvnw clean install
 
 docs:

@@ -1,6 +1,6 @@
 # Shippy
 
-Spring and Typescript backend and a React front end as per ye ole `instructions.txt`
+Spring ("shipping") and Typescript ("enrollment") backends along with a React front end as per ye ole `instructions.txt`
 
 ## Quick Start (Just Run)
 
@@ -13,18 +13,20 @@ Open the client
 open http://localhost:3000/
 ```
 
-## Development
+## Local Development*
 
-Start supporting services mysql/mongo
+Run all servcies except shipping (Spring)
 ```
 make up
 ```
 
-Run / test Spring locally (Reuires Java 1.8+ and Maven)
+Run / test Spring locally (Requires Java 1.8+ and Maven)
 ```
 make test
 make dev
 ```
+
+##### *See notes below
 
 ## Make
 
@@ -38,11 +40,11 @@ make dev
 
 **`make dev`** runs spring boot on local host (must have services up, see note below)
 
-**`make dev`** runs api tests on local host
+**`make test`** runs spring app tests on local host
 
-**`make clean`** runs api clean install in the api container
+**`make clean`** runs clean install on spring app
 
-**`make docs`** generates api docs (apib) and opens HTML format in browser
+**`make docs`** generates api docs (apib) and opens in HTML format in browser
 
 ## Design Principals
 

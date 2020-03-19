@@ -24,14 +24,15 @@ services:
   api:
     container_name: 'shippy-api'
     build:
-      context: ./shipping
+      context: ./api
     volumes:
-      - ./shipping/src/:/app/src/
-      - ./shipping/target/:/app/target/
-      - ./shipping/pom.xml:/app/pom.xml
+      - ./api/src/:/app/src/
+      - ./api/target/:/app/target/
+      - ./api/pom.xml:/app/pom.xml
     environment:
       - MYSQL_HOST=mysql
       - REDIS_HOST=redis
+      - ENROLLMENT_ENDPOINT=http://enrollment:3001/enroll/status/
     ports:
       - "8080:8080"
     entrypoint: ["mvn", "spring-boot:run"]
