@@ -12,6 +12,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class EnrollmentDelegate {
@@ -19,11 +21,11 @@ public class EnrollmentDelegate {
   @Value("${enrollment.endpoint}")
   private String ENROLLMENT_ENDPOINT;
 
+  Logger logger = LoggerFactory.getLogger(EnrollmentDelegate.class);
+
   public Boolean isUserEnrolled(String sellerUsername) {
     try {
       String response = callService(sellerUsername);
-      System.out.println("GOT THE RESPONSE!");
-      System.out.println(response);
       if (null == response) {
         return false;
       }
@@ -35,26 +37,20 @@ public class EnrollmentDelegate {
   }
 
   private String callService(String sellerUsername) throws IOException {
-
     CloseableHttpClient httpClient = HttpClients.createDefault();
-
     try {
       HttpGet request = new HttpGet(ENROLLMENT_ENDPOINT + sellerUsername);
       CloseableHttpResponse response = httpClient.execute(request);
       try {
-
-          // Get HttpResponse Status
-          // System.out.println(response.getProtocolVersion());              // HTTP/1.1
-          // System.out.println(response.getStatusLine().getStatusCode());   // 200
-          // System.out.println(response.getStatusLine().getReasonPhrase()); // OK
-          // System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK
-
           HttpEntity entity = response.getEntity();
           if (entity != null) {
               return EntityUtils.toString(entity);
           }
           return null;
 
+      } catch(Exception e) {
+        logger.error(e.getMessage(), request);
+        throw e;
       } finally {
           response.close();
       }

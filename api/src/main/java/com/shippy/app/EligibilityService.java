@@ -52,12 +52,14 @@ public class EligibilityService {
     // ).collect(Collectors.toList());
     // System.out.println(cats);
     if (!acceptableCategories.contains(product.getCategory())) {
+      logger.info("Category is not supported for the product");
       product.setEligibilityStatus(Product.EligibilityStatus.PRODUCT_CATEGORY_EXCLUDED);
       product.setIsEligible(false);
       return product;
     }
 
     if (config.getMinimumPrice() > product.getPrice()) {
+      logger.info("Price is too low to meet current configuration");
       product.setEligibilityStatus(Product.EligibilityStatus.PRICE_DOES_NOT_MEET_THRESHOLD);
       product.setIsEligible(false);
       return product;
