@@ -18,7 +18,7 @@ public class ProductService {
   ProductRepository productRepository;
 
   @Autowired
-  ProductShippingEligibility eligibilityService;
+  EligibilityService eligibilityService;
 
   Logger logger = LoggerFactory.getLogger(ProductService.class);
 

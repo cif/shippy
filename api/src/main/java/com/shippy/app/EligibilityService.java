@@ -2,8 +2,6 @@ package com.shippy.app;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import com.shippy.app.model.Product;
 import com.shippy.app.model.ProductCategory;
@@ -17,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductShippingEligibility {
+public class EligibilityService {
 
   private static final String SHIPPING_CONFIG_MAP_KEY = "SHIPPING_CONFIG";
 
