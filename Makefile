@@ -7,7 +7,7 @@ up:
 	@docker-compose up
 
 down:
-	@docker-compose down
+	@docker-compose -f docker-compose-run.yaml down
 
 test:
 	export MYSQL_HOST=localhost && \

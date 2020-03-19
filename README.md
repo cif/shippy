@@ -40,15 +40,15 @@ make dev
 
 `Makefile` has helpful shortcuts from root of the repo:
 
-**`make run`** bring up mysql and redis container (detached)
+**`make run`** bring up mysql and redis, spring boot and react client dev server
 
-**`make up`** docker compose services client, and java app bound to proc (not detached)
+**`make up`** bring up mysql and redis container
 
-**`make down`** brings down api dependent services and
+**`make down`** brings down all running service containers
 
-**`make build`** rebuilds container and brinds up all services bound to proc (not detached)
+**`make dev`** runs spring boot on local host (must have services up, see note below)
 
-**`make test`** runs api tests locally (must have services up)
+**`make dev`** runs api tests on local host
 
 **`make clean`** runs api clean install in the api container
 
