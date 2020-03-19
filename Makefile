@@ -1,4 +1,4 @@
-.PHONY: up build test api-dev
+.PHONY: up build test api-dev docs
 
 up:
 	@docker-compose up
@@ -17,3 +17,8 @@ api-dev:
 clean:
 	@cd api && \
 	./mvnw clean install
+
+docs:
+	@cd docs && \
+	npm run doc && \
+	open doc.html

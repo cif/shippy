@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -76,9 +77,12 @@ public class ProductServiceTests {
 	public void productPriceDeterminesCorrectEligibility() throws Exception {
 		// given default price is 100
 		// and categories default to full enum values
-		ShippingConfiguration config = new ShippingConfiguration();
+		ShippingConfiguration config = new ShippingConfiguration(
+			100.00,
+			new ProductCategory[] { ProductCategory.OUTERWEAR }
+		);
 		this.mockMvc.perform(
-			post("/products/config/update")
+			put("/products/config")
 				.contentType("application/json")
 				.content(asJsonString(config))
 		)
@@ -124,7 +128,7 @@ public class ProductServiceTests {
 			new ProductCategory[] { ProductCategory.FLY_FISHING, ProductCategory.SKIING }
 		);
 		this.mockMvc.perform(
-			post("/products/config/update")
+			put("/products/config")
 				.contentType("application/json")
 				.content(asJsonString(config))
 		)

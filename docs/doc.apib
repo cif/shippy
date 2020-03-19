@@ -1,0 +1,115 @@
+FORMAT: 1A
+# Shippy REST API
+
+Determine if products are eligible depending on configurable requrements
+
+## Products [/products]
+
+A list of products logged during shipping inquries
+
+### List prducts [GET]
+
++ Response 200 (application/json)
+
+        {
+            [
+                {
+                    "id": 1,
+                    "title": "test.title",
+                    "seller": "test.seller",
+                    "category": "OUTERWEAR",
+                    "price": 15.55,
+                    "isEligible": false
+                },
+                {
+                    "id": 3,
+                    "title": "test.title",
+                    "seller": "test.seller",
+                    "category": "OUTERWEAR",
+                    "price": 15.55,
+                    "isEligible": false
+                },
+            ]
+        }
+
+
+### Check product shipping eligibility  [POST]
+
+All body fields are required. A 400 resonse will be returned for invalid data.
+
++ Request
+
+    + Headers
+
+              Content-Type: application/json
+
+    + Body
+
+            {
+                "title": "This is the title",
+                "seller": "benipsen",
+                "category": "OUTERWEAR",
+                "price": 20,
+            }
+
+
++ Response 200 (application/json)
+
+            {
+                "id": 58,
+                "title": "This is the title",
+                "seller": "benipsen",
+                "category": "OUTERWEAR",
+                "price": 20,
+                "isEligible": false
+            }
+
++ Response 400
+
+
+## Product shipping eligibility configuration [/products/config]
+
+### Return the current configuration [GET]
+
++ Response 200 (application/json)
+
+        {
+            "minimumPrice": 100,
+            "categories": [
+                "FLY_FISHING",
+                "SKIING"
+            ],
+        }
+
+### Update the shipping configuration [PUT]
+
+All body fields are required. A 400 resonse will be returned for invalid data.
+
++ Request
+
+    + Headers
+
+              Content-Type: application/json
+
+    + Body
+
+            [
+                {
+                    "minimumPrice": 3009,
+                    "categories": [0, 2, 3, 4]
+                }
+            ]
+
++ Response 200 (application/json)
+
+        {
+           "minimumPrice": 3009,
+            "categories": [
+                "OUTERWEAR",
+                "SURFING",
+                "SNOWBOARDING",
+                "SKIING"
+            ],
+        }
+
++ Response 400

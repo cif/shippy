@@ -1,0 +1,16 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "aglio": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "doc": "aglio -i doc.apib -o doc.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

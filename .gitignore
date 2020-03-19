@@ -3,3 +3,4 @@ api/target
 .data/
 .redis/
 .vscode/
+node_modules/

@@ -27,10 +27,6 @@ public class ProductService {
     return productRepository.findAll();
   }
 
-  @GetMapping("/categories")
-  public ProductCategory[] getCategories() {
-    return ProductCategory.values();
-  }
 
   @PostMapping("/products")
   public Product validateProduct(@Valid @RequestBody Product product) {
@@ -45,8 +41,13 @@ public class ProductService {
     return eligibilityService.getShippingConfiguration();
   }
 
-  @PostMapping("/products/config/update")
+  @PutMapping("/products/config")
   public ShippingConfiguration updateShippingConfiguration(@Valid @RequestBody ShippingConfiguration req) {
     return eligibilityService.updateConfiguration(req);
+  }
+
+  @GetMapping("/categories")
+  public ProductCategory[] getCategories() {
+    return ProductCategory.values();
   }
 }
