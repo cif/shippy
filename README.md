@@ -4,7 +4,7 @@ Spring and Typescript backend and a React front end as per ye ole `instructions.
 
 ## Quick Start (Just Run)
 
-Run all services and client
+Run all services and client (Requires Docker)
 ```
 make run
 ```
@@ -20,7 +20,7 @@ Start supporting services mysql/mongo
 make up
 ```
 
-Test backend locally (Java 1.8+ and Maven)
+Run / test Spring locally (Reuires Java 1.8+ and Maven)
 ```
 make test
 make dev
@@ -57,19 +57,18 @@ Persistence elections this time were MySQL and Redis.
 
 The app is complosed of two services, a Spring products/shipping configuration service, and a Typescript/Node enrollment service.
 
-Each are hypothetical units of deployment, the enrollment service is particularlly small (two endpoints). They share the mysql DB.
+Each are hypothetical units of deployment, the enrollment service is particularlly small (two endpoints). Given high traffic to the new enrollment option, we wanted to scale that service independently of the main product service. They still share a mysql DB.
 
-Today, I am more of the opinion that service discovery, load balancing etc. are best left to the actual network overlays / infra and shouldn't be concerns of service implementations If you really need a retry and circuit breaking, maybe you should be using pubsub for that delivery?
+**Why not a micro framwork?** Today, I am more of the opinion that service discovery, load balancing etc. are best left to the actual network overlays / infra and shouldn't be concerns of service implementations If you really need a retry and circuit breaking, maybe you should be using pubsub for that delivery?
 
-As cool as micro is, transactions don't go well between partitions (CAP)
+I have yet to see a large scale (big company) deployment of independent services all embracing the same framwork.
 
-If protocols matter just have a service delegate implementation speak it.
 
 ## Deployment
 
 Containers. Kube? Cloud Run? Fargate?
 
-TODO: I wrote the back end in Java so I didn't have time to make a cool pipeline and infra with Terraform.
+I wrote most of the back end in Java so I didn't have time to make a cool pipeline and infra with Terraform.
 
 ## Learning Opportunity?
 

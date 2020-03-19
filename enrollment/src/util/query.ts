@@ -7,24 +7,28 @@ const conn = mysql.createConnection({
   database: 'shippy'
 })
 
-export const query = <T>(queryString: string) => new Promise<T[]>((resolve, reject) => {
-  conn.query(queryString, (err, results) => {
-    if (err) {
-      reject(err)
-    }
-    const typedResults = []
-    Object.keys(results).forEach((key) => {
-      typedResults.push(results[key])
+export const query = <T>(queryString: string) =>
+  new Promise<T[] | undefined>((resolve, reject) => {
+    conn.query(queryString, (err, results) => {
+      if (err) {
+        // tslint:disable-next-line
+        return reject(err)
+      }
+      const typedResults = []
+      Object.keys(results).forEach((key) => {
+        typedResults.push(results[key])
+      })
+      resolve(typedResults)
     })
-    resolve(typedResults)
   })
-})
 
-export const update = <T>(queryString: string) => new Promise<T>((resolve, reject) => {
-  conn.query(queryString, (err, results) => {
-    if (err) {
-      reject(err)
-    }
-    resolve(results)
+export const update = <T>(queryString: string) =>
+  new Promise<T>((resolve, reject) => {
+    conn.query(queryString, (err, results) => {
+      if (err) {
+        // tslint:disable-next-line
+        return reject(err)
+      }
+      resolve(results)
+    })
   })
-})

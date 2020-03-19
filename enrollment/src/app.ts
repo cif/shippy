@@ -3,15 +3,18 @@ require('dotenv').config({
 })
 
 import express, { Response } from 'express'
-import { enrollmentHandler } from './handlers/enrollmentHandler'
+import { getEnrollmentStatus, postEnrollment } from './handlers/enrollment'
 import body from 'body-parser'
 import async from 'express-async-handler'
+import { logger } from './util/logger'
 
+const log = logger('app:service')
 export const app = express()
 
 // routes
 app.use(body.json())
-app.post('/enroll', async(enrollmentHandler))
+app.post('/enroll', async(postEnrollment))
+app.get('/enroll/status/:sellerUsername', async(getEnrollmentStatus))
 
 // healthcheck
 app.get('/', (_: undefined, res: Response) => {
@@ -23,5 +26,8 @@ app.get('/', (_: undefined, res: Response) => {
 
 // error handler
 app.use((err: Error, req: Request, resp: Response) => {
-  resp.status(500).send('An application error occurred.')
+  log(`application error`, err)
+  resp
+    .status(500)
+    .send('An application error occurred. Please try again later')
 })
