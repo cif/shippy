@@ -20,3 +20,19 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - ./.redis:/data
+
+  enrollment:
+    container_name: 'enrollment'
+    build:
+      context: ./enrollment
+    volumes:
+      - ./enrollment/src/:/app/src/
+      - ./enrollment/tests/:/app/tests/
+    environment:
+      - MYSQL_HOST=mysql
+      - PORT=3001
+      - DEBUG=app:*
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql

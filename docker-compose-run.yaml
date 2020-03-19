@@ -45,8 +45,9 @@ services:
       context: ./enrollment
     volumes:
       - ./enrollment/src/:/app/src/
+      - ./enrollment/tests/:/app/tests/
     environment:
-      - MYSQL_HOST=mysql
+      - MYSQL_HOST=mysqlls
       - PORT=3001
       - DEBUG=app:*
     ports:
