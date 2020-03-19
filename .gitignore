@@ -4,3 +4,4 @@ api/target
 .redis/
 .vscode/
 node_modules/
+coverage/

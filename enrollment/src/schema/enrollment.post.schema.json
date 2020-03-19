@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "required": [
+    "sellerUsername",
+    "isEnrolled"
+  ],
+  "properties": {
+    "sellerUsername": {
+      "$id": "#/properties/sellerUsername",
+      "type": "string",
+      "title": "The Sellerusername Schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "dave"
+      ]
+    },
+    "isEnrolled": {
+      "$id": "#/properties/isEnrolled",
+      "type": "boolean",
+      "title": "The Isenrolled Schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": false,
+      "examples": [
+        true
+      ]
+    }
+  }
+}

@@ -38,3 +38,18 @@ services:
     depends_on:
       - redis
       - mysql
+
+  enrollment:
+    container_name: 'enrollment'
+    build:
+      context: ./enrollment
+    volumes:
+      - ./enrollment/src/:/app/src/
+    environment:
+      - MYSQL_HOST=mysql
+      - PORT=3001
+      - DEBUG=app:*
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
