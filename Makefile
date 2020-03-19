@@ -1,21 +1,28 @@
-.PHONY: up build test api-dev docs
+.PHONY: run up down build test api-dev docs
+
+run:
+	@docker-compose -f docker-compose-run.yaml up
 
 up:
 	@docker-compose up
 
-build:
-	@docker-compose up --build
+down:
+	@docker-compose down
 
 test:
-	@cd api && \
+	export MYSQL_HOST=localhost && \
+	export REDIS_HOST=localhost && \
+	cd api && \
 	./mvnw test
 
-api-dev:
-	@cd api && \
+dev:
+	export MYSQL_HOST=localhost && \
+	export REDIS_HOST=localhost && \
+	cd api && \
 	./mvnw spring-boot:run
 
 clean:
-	@cd api && \
+	cd api && \
 	./mvnw clean install
 
 docs:
