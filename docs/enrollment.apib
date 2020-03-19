@@ -1,0 +1,56 @@
+## Enrollment [/enroll]
+
+### Enroll or update a seller [POST]
+
+A "crupdate" POST which allows enrollment or unenrollment epending on isEnrolled attribute.
+Returns 404 if either field is not provided.
+
++ Request
+
+    + Headers
+
+              Content-Type: application/json
+
+    + Body
+
+
+            {
+                "sellerUsername": "coolguy123",
+                "isEnrolled": true
+            }
+
+
+    + Schema
+
+            <!-- include(../enrollment/src/schema/enrollment.post.schema.json) -->
+
+
++ Response 200 (application/json)
+
+
+        {
+            "sellerUsername": "coolguy123",
+            isEnrolled: true
+        }
+
+
++ Response 400
+
+
+## Enrollment status [/enroll/status/{sellerUsername}]
+
+Returns the enrollment status of seller
+
++ Parameters
+
+    + sellerUsername: 5cdc363667ec203ddadf9b9c (string) group identifer (ObjectId)
+
+### Get  [GET]
+
++ Response 200 (application/json)
+
+        {
+           {
+            isEnrolled: false
+           }
+        }
