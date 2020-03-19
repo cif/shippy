@@ -1,13 +1,33 @@
 FORMAT: 1A
 # Shippy REST API
 
-Determine if products are eligible depending on configurable requrements
+Determine if products are eligible depending on configurable requirements.
+
+## Categories [/categories]
+
+### List categories [GET]
+
+An array of enumerated string values representing valid categories
+
++ Response 200 (application/json)
+
+        {
+            [
+                "OUTERWEAR",
+                "FLY_FISHING",
+                "SURFING",
+                "SNOWBOARDING",
+                "SKIING",
+                "SPEEDFLYING"
+            ],
+        }
+
 
 ## Products [/products]
 
-A list of products logged during shipping inquries
+A list of products logged to mysql db during shipping inquries
 
-### List prducts [GET]
+### List product event log [GET]
 
 + Response 200 (application/json)
 

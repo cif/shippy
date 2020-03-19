@@ -164,4 +164,20 @@ public class ProductServiceTests {
 		.andExpect(status().is(200))
 		.andExpect(jsonPath("$.isEligible", is(false)));
 	}
+
+	@Test
+	public void getsCategories() throws Exception {
+		this.mockMvc.perform(get("/categories"))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$", hasSize(greaterThan(0))));
+	}
+
+	@Test
+	public void getsConfig() throws Exception {
+		this.mockMvc.perform(get("/products/config"))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.categories", hasSize(greaterThan(0))))
+			.andExpect(jsonPath("$.minimumPrice", is(greaterThan(0.01))));
+
+	}
 }
