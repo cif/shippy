@@ -56,7 +56,10 @@ make dev
 
 **`make down`** brings down all running service containers
 
+<<<<<<< HEAD
 <hr>
+=======
+>>>>>>> ca7400fbec11c7027940ad665692f982239e75a9
 
 ## Design Principals
 
