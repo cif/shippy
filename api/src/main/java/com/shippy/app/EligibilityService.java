@@ -82,9 +82,9 @@ public class EligibilityService {
     RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
     ShippingConfiguration shippingConfig = configMap.get(SHIPPING_CONFIG_MAP_KEY);
 
-    // just return defaults if redis ran away
+    // return defaults if redis ran away
     if (null == shippingConfig) {
-      shippingConfig = new ShippingConfiguration();
+      shippingConfig = new ShippingConfiguration(100.0, ProductCategory.values());
     }
     return shippingConfig;
   }
