@@ -34,5 +34,6 @@ clean:
 
 docs:
 	@cd docs && \
+	npm i && \
 	npm run doc && \
 	open index.html
