@@ -69,7 +69,7 @@ Stopping docker-compose and `make run` ing again should get things a good state 
 * Write tests that exercise programs the same way they are used.**
 * Do much as possible with Docker to avoid OS dependency drift.
 
-##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest unit test for this app. Ask me why in an interview : )*
+##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest/enzyme/react testing lib for this app.*
 
 
 ## Architecture
