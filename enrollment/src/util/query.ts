@@ -1,7 +1,8 @@
 
 import mysql from 'mysql'
 
-export const conn = mysql.createConnection({
+export const conn = mysql.createPool({
+  connectionLimit: 10,
   host: process.env.MYSQL_HOST,
   user: 'shippy',
   password: 'getitdone',

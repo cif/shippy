@@ -1,6 +1,6 @@
 # Shippy
 
-Spring ("shipping") and Node/Typescript ("enrollment") backends and React/Typescript app as per ye ole `instructions.txt`
+Spring and Node/Typescript backends and a React/Typescript app as per ye ole `instructions.txt`
 
 ## Quick Start
 
