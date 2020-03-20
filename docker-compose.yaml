@@ -37,14 +37,14 @@ services:
     depends_on:
       - mysql
 
-  # client:
-  #   container_name: 'client'
-  #   build:
-  #     context: ./client
-  #   volumes:
-  #     - ./client/src/:/app/src/
-  #     - ./cliient/tests/:/app/tests/
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - enrollment
+  client:
+    container_name: 'client'
+    build:
+      context: ./client
+    volumes:
+      - ./client/src/:/app/src/
+      - ./cliient/tests/:/app/tests/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - enrollment
