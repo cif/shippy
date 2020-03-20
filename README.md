@@ -1,6 +1,6 @@
 # Shippy
 
-Spring and Node/Typescript backends and a React/Typescript app as per ye ole `instructions.txt`
+Spring and Node/Typescript backends with React/Typescript client as per ye ole `instructions.txt`
 
 ## Quick Start
 
