@@ -4,7 +4,6 @@ import {
   Input,
   Button,
   Select,
-  Spin
 } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useProductForm } from '../hooks/useProductForm'

@@ -71,7 +71,7 @@ export const useProductForm = (): ProductFormHook => {
   const handleUserNameChange = debounce(async (e: any) => {
     const username = e.target.value
     setSellerName(username)
-    if (e == '') {
+    if (e === '') {
       setIsEnrolled(null)
       setEnrollmentStatusInFlight(false)
     }

@@ -4,9 +4,8 @@ import {
   Input,
   Button,
   Select,
-  Tooltip
 } from 'antd'
-import { LoadingOutlined, CheckCircleTwoTone } from '@ant-design/icons'
+import { LoadingOutlined, CheckCircleTwoTone, CloseCircleOutlined } from '@ant-design/icons'
 import { useProductForm } from '../hooks/useProductForm'
 
 export const ProductForm: FunctionComponent = () => {
@@ -39,7 +38,6 @@ export const ProductForm: FunctionComponent = () => {
         label="Seller"
         name="seller"
         rules={[{ required: true, message: 'Seller is required!' }]}
-
       >
         <Input
           autoComplete='off'
@@ -53,15 +51,20 @@ export const ProductForm: FunctionComponent = () => {
       {isEnrolled !== null &&
         <div>
           {isEnrolled &&
-            <div>
+            <div className="enroll-status">
               <CheckCircleTwoTone
                 twoToneColor="#52c41a"
                 className="icon"
-              /> <h4>Nice! This seller is enrolled in the program.</h4>
+              />
+              <h4>Nice! This seller is enrolled in the program.</h4>
             </div>
           }
           {!isEnrolled &&
-            <div>
+            <div className="enroll-status">
+              <CloseCircleOutlined
+                style={{ color: '#cc0000' }}
+                className="icon"
+              />
               <h4>That user is not enrolled yet...</h4>
               <Button
                 type="default"

@@ -36,17 +36,24 @@ header {
   margin-top: 40px;
 }
 
-.history-item {
+.history-item,
+.enroll-status {
   display: flex;
   align-items: center;
 }
 
-.history-item .icon {
+.history-item .icon,
+.enroll-status .icon {
   flex: 1;
+  margin-right: 5px;
+  font-size: 20px;
 }
 
-.history-item h3 {
+.history-item h3,
+.enroll-status h4 {
   flex: 10;
 }
+
+
 
 
