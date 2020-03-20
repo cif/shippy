@@ -80,9 +80,9 @@ The two backends are hypothetical units of deployment, the enrollment service is
 
 **Why not a micro framwork?** Today, I am more of the opinion that service discovery, load balancing etc. are best left to the actual network overlays, ipsec, dns, infra etc. and shouldn't be concerns of service implementations themselves. If you really need retry and circuit breaking logic, maybe you should be using pubsub/kafka for that delivery?
 
-I have yet to see a large scale deployment of independent services all embracing the same framework. The only go-micro deployment I've seen in the wold was running on a single VM.
+I have yet to see a large scale deployment of independent services all embracing the same framework. The only go-micro deployment I've seen in the "real" world so far was running on a single VM.
 
-Thats said, tomorrow I can be of a different opinion.
+That said, tomorrow I can be of a different opinion.
 
 
 ## Deployment
