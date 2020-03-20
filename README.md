@@ -1,12 +1,12 @@
 ## Shippy
 
-Shippy is comprised of two servcies and a react client.
+Shippy is comprised of two servcies and React client.
 
 * Spring "products" app in `api/`
 * Typescript/Node "enrollment" servcie in `enrollment/`
 * Typescript/React app "client" in `client/`
 
-See combined API endpoint docs at `docs/index.html`
+See combined API endpoint docs at `docs/index.html`, run `make docs` to open in browser.
 
 
 # Quick Start
