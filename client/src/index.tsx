@@ -8,6 +8,7 @@ import { ProductStateProvider } from './state/ProductsContext'
 ReactDOM.render(
   <ProductStateProvider>
     <App />
+
   </ProductStateProvider>,
   document.getElementById('root')
 );

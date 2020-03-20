@@ -12,9 +12,9 @@ const App: FunctionComponent = () =>
       <section className="main">
         <section className="form">
           <ProductForm />
+          <ConfigurationForm />
         </section>
         <section className="history">
-          <ConfigurationForm />
           <History />
         </section>
       </section>

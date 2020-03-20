@@ -32,8 +32,16 @@ header {
   padding: 20px;
 }
 
-.history-list h2 {
+#config h2 {
   margin-top: 40px;
+}
+.history-item {
+  padding: 5px;
+  font-size: 15px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.history-item:nth-child(even) {
+  background-color: #fbfbfb;
 }
 
 .history-item,

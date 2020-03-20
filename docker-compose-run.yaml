@@ -48,7 +48,7 @@ services:
       - ./enrollment/src/:/app/src/
       - ./enrollment/tests/:/app/tests/
     environment:
-      - MYSQL_HOST=mysqlls
+      - MYSQL_HOST=mysql
       - PORT=3001
       - DEBUG=app:*
     ports:
@@ -62,8 +62,6 @@ services:
       context: ./client
     volumes:
       - ./client/src/:/app/src/
-      - ./cliient/tests/:/app/tests/
+      - ./client/tests/:/app/tests/
     ports:
       - "3000:3000"
-    depends_on:
-      - enrollment

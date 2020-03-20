@@ -4,9 +4,17 @@ Created by Hall, Jake Feb 28, 2020 05:18 PM GMT-07:00
 Go to start of metadata
 
 Background
-eBay would like to introduce a new regional shipping program to serve buyers and sellers in remote locations. To promote the inventory eligible for this new shipping program, eBay is planning to make changes to its front end user experiences and back end services. These changes will range from altering search rankings, to modifying recommendation algorithms, to changing the way eligible items are visually displayed.
+eBay would like to introduce a new regional shipping program to serve buyers and sellers in remote locations.
 
-Each planned change (and probably some unplanned changes) depends upon a core service that determines whether or not an item is eligible for the new shipping program.  An item is determined to be eligible for this new program according to a set of rules that is created and managed by eBay administrators. The core set of rules will probably change over time, but initially includes all of the following:
+To promote the inventory eligible for this new shipping program, eBay is planning to make changes to its front end user experiences and back end services.
+
+These changes will range from altering search rankings, to modifying recommendation algorithms, to changing the way eligible items are visually displayed.
+
+Each planned change (and probably some unplanned changes) depends upon a core service that determines whether or not an item is eligible for the new shipping program.
+
+An item is determined to be eligible for this new program according to a set of rules that is created and managed by eBay administrators.
+
+The core set of rules will probably change over time, but initially includes all of the following:
 
 The seller of the item is enrolled in the shipping program
 
@@ -15,7 +23,8 @@ the item is from a pre-approved category
 the item has a price greater than or equal to some minimum amount
 
 Goal
-Write a service that identifies whether or not an item is eligible for the new shipping program, as well as a simple admin interface which can be used to exercise these APIs.
+Write a service that identifies whether or not an item is eligible for the new shipping program, as well as a simple admin
+interface which can be used to exercise these APIs.
 
 Service API
 Service clients must provide the following input about an item:
@@ -32,7 +41,11 @@ price: A double representing the price of the item in USD
 In non-error conditions, the service must return an output value that indicates whether or not an item is eligible for the new service.
 
 Rules Configuration
-As business needs change, the eligibility rules will need to change as well.  Some changes will require modifying service code, such as adding a completely new rule (e.g. the program is only available in certain seasons).  Other changes should only require configuration modifications, such as increasing the minimum item price, adding/removing a user to the enrollment list for the program, or adding/removing a category to the pre-approved category list.  Top marks will be given for exposing these configurable items through an API that could be used as a basis for browser based tooling for eBay administrators.
+As business needs change, the eligibility rules will need to change as well.
+
+Some changes will require modifying service code, such as adding a completely new rule (e.g. the program is only available in certain seasons).
+
+Other changes should only require configuration modifications, such as increasing the minimum item price, adding/removing a user to the enrollment list for the program, or adding/removing a category to the pre-approved category list.  Top marks will be given for exposing these configurable items through an API that could be used as a basis for browser based tooling for eBay administrators.
 
 Tech Constraints
 To keep things somewhat constrained we ask that you:

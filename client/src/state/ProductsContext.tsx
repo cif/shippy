@@ -67,7 +67,7 @@ export const ProductStateProvider: FunctionComponent = ({ children }) => {
   }, [])
 
   const addToHistory = (product: Product) => {
-    setProducts([...products, product])
+    setProducts([product, ...products])
   }
 
   return <ProductsContext.Provider
