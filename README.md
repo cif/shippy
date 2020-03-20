@@ -1,12 +1,18 @@
-# Shippy
+## Shippy
 
-Spring and Node/Typescript backends with React/Typescript client as per ye ole `instructions.txt`
+Shippy is comprised of two servcies and a react client.
 
-## Quick Start
+* Spring "products" app in `api/`
+* Typescript/Node "enrollment" servcie in `enrollment/`
+* Typescript/React app "client" in `client/`
 
-Run all services and the client via docker-compose.
+See combined API endpoint docs at `docs/index.html`
 
-**This takes a few minutes the first time (~3m on Late 2013 MBP)**
+
+# Quick Start
+
+Run all services and the client via docker-compose. **This takes a few minutes on first build**, faster if you have node and maven images already.
+
 ```
 make run
 ```
@@ -15,9 +21,10 @@ Wait for output on client service "You can now view client in the browser" in co
 open http://localhost:3000/
 ```
 
+
 ## Run Tests
 
-First, run all servcies in containers except the Spring app, see Learning Opportunity below
+Make sure all enrollment, mysql and redis are running. If you did the quick start they already are. If not, you can use:
 ```
 make up
 ```
@@ -31,6 +38,7 @@ Run the spring app locally on port 8080, (will export some environment variables
 ```
 make dev
 ```
+<hr>
 
 ## Makefile Target Reference
 
@@ -40,14 +48,15 @@ make dev
 
 **`make run`** bring up mysql and redis, spring boot, enrollment express typescript app in dev mode, and react client dev server
 
-**`make up`** bring up all the services except for the spring app
+**`make up`** bring up all the services except for the spring app (*see below*)
 
-**`make down`** brings down all running service containers
-
-**`make dev`** runs spring boot on localhost (must have services up, see note below)
+**`make dev`** runs spring boot on localhost (*see below*)
 
 **`make clean`** runs clean install on spring app
 
+**`make down`** brings down all running service containers
+
+<hr>
 
 ## Design Principals
 
@@ -57,6 +66,8 @@ make dev
 * Do much as possible with Docker to avoid OS dependency drift.
 
 ##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest unit tetts for this app. Ask me why in the interview.*.
+
+<hr>
 
 ## Architecture
 
