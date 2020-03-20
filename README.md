@@ -76,7 +76,7 @@ Stopping docker-compose and `make run` ing again should get things a good state 
 
 Persistence elections this time were MySQL and Redis.
 
-The two backends are hypothetical units of deployment, the enrollment service is particularlly small (two endpoints). Given high traffic to the new enrollment option, we wanted to scale that service independently of the main product eligibility service which really only takes admin traffic. They share the mysql DB (cluster in prod) for transational integrity (not eventually consistent, ACID conistent).
+The two backends are hypothetical units of deployment, the enrollment service is particularlly small (two endpoints). We wanted the ability to scale each service independently given the traffic patterns. They share the mysql DB (ACID vs BASE)
 
 **Why not a micro framwork?** Today, I am more of the opinion that service discovery, load balancing etc. are best left to the actual network overlays, ipsec, dns, infra etc. and shouldn't be concerns of service implementations themselves. If you really need retry and circuit breaking logic, maybe you should be using pubsub/kafka for that delivery?
 
