@@ -39,6 +39,12 @@ Run the spring app locally
 make dev
 ```
 
+## Troubleshooting
+
+Every so often mysql won't be ready to accept connections as the spring and typescript apps are coming up, despite `depends_on:` in the compose yaml.
+
+Stopping docker-compose and `make run` ing again should get things a good state eventually.
+
 
 # Makefile Target Reference
 
