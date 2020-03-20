@@ -1,15 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FunctionComponent } from 'react'
+import { History } from './components/History'
+import { ProductForm } from './components/ProductForm'
+import { ConfigurationForm } from './components/ConfigurationForm'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        ...
+const App: FunctionComponent = () =>
+  (
+    <div className="app">
+      <header>
+        <span className="logo">shippy</span>
       </header>
+      <section className="main">
+        <section className="form">
+          <ProductForm />
+        </section>
+        <section className="history">
+          <ConfigurationForm />
+          <History />
+        </section>
+      </section>
     </div>
-  );
-}
+  )
+
 
 export default App;

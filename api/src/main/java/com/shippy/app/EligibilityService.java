@@ -72,8 +72,8 @@ public class EligibilityService {
   public ShippingConfiguration updateConfiguration (ShippingConfiguration newConfig) {
     RedissonClient redisson = getRedisClient();
     RMap<String, ShippingConfiguration> configMap = redisson.getMap(SHIPPING_CONFIG_MAP_KEY);
-    ShippingConfiguration updated = configMap.put(SHIPPING_CONFIG_MAP_KEY, newConfig);
-    return updated;
+    configMap.put(SHIPPING_CONFIG_MAP_KEY, newConfig);
+    return newConfig;
   }
 
   public ShippingConfiguration getShippingConfiguration() {

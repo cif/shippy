@@ -5,6 +5,7 @@ require('dotenv').config({
 import express, { Express, Response, NextFunction } from 'express'
 import { getEnrollmentStatus, postEnrollment } from './handlers/enrollment'
 import body from 'body-parser'
+import cors from 'cors'
 import async from 'express-async-handler'
 import { logger } from './util/logger'
 
@@ -13,6 +14,7 @@ export const app: Express = express()
 
 // routes
 app.use(body.json())
+app.use(cors())
 app.post('/enroll', async(postEnrollment))
 app.get('/enroll/status/:sellerUsername', async(getEnrollmentStatus))
 
