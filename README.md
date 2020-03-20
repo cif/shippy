@@ -29,7 +29,7 @@ Make sure all enrollment, mysql and redis are running. If you did the quick star
 make up
 ```
 
-Run typescript enrollment JEST integration in container and Spring integration tests locally
+Run typescript enrollment Jest integration tests (in container) and Spring MockMVC integration tests locally
 ```
 make test
 ```
@@ -63,7 +63,7 @@ make dev
 * Write tests that exercise programs the same way they are used.**
 * Do much as possible with Docker to avoid OS dependency drift.
 
-##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest unit tetts for this app. Ask me why in the interview.*.
+##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest unit test for this app. Ask me why in an interview : )*
 
 
 ## Architecture
