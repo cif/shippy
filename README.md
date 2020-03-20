@@ -29,18 +29,18 @@ Make sure all enrollment, mysql and redis are running. If you did the quick star
 make up
 ```
 
-Run typescript enrollment JEST integration in container and Spring integration tests locally (Requires Java 1.8+)
+Run typescript enrollment JEST integration in container and Spring integration tests locally
 ```
 make test
 ```
 
-Run the spring app locally on port 8080, (will export some environment variables for you)
+Run the spring app locally
 ```
 make dev
 ```
-<hr>
 
-## Makefile Target Reference
+
+# Makefile Target Reference
 
 **`make docs`** generates service docs HTML from apib format and opens in browser
 
@@ -56,12 +56,7 @@ make dev
 
 **`make down`** brings down all running service containers
 
-<<<<<<< HEAD
-<hr>
-=======
->>>>>>> ca7400fbec11c7027940ad665692f982239e75a9
-
-## Design Principals
+# Design Principals
 
 * DRY. If you have to update something in more than once place, you did it wrong.
 * KISS. Self explainatory.
@@ -70,7 +65,6 @@ make dev
 
 ##### ** *I ran out of time on front end dev, but would have used Cypress instead of jest unit tetts for this app. Ask me why in the interview.*.
 
-<hr>
 
 ## Architecture
 
@@ -93,14 +87,14 @@ Containers. Kube? Cloud Run? Fargate?
 
 I wrote most of the back end in Java so I didn't have time to make a cool pipeline and infra with Terraform. Or write the Cypress tests (see above)
 
-## Learning Opportunity?
+## Learning Opportunity / Better Java dev ex?
 
-Ordianarily I would containerize all dev environments and `docker-compose exec` all the various targets against them as with the enrollment service, however the docker-compose volume mappings for the spring app weren't recompiling my tests (required container rebuild) which is pretty bad devX.. no TDD! (╯°□°)╯︵ ┻━┻
+Ordianarily I would containerize all dev environments and `docker-compose exec` all the various targets against them as with the enrollment service, however the docker-compose volume mappings for the spring app weren't recompiling my tests (required container rebuild) which is pretty bad dev ex.. no TDD! (╯°□°)╯︵ ┻━┻
 
 #### Check out `dockerized-dev` branch for attempts there.
 
 
-## Questions? Did I screw something up badly?
+# Questions? Did I screw something up badly?
 
 Asynchronous friendly support always available: email@benipsen.com
 
