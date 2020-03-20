@@ -10,13 +10,17 @@ export type MapLike = {
 export interface ProductFormHook {
   categories: string[]
   inFlight: boolean
+  isEnrolled: boolean | null
   enrollmentStatusInFlight: boolean
-  handleSubmit: (data: MapLike) => void
+  handleSubmit: (data: MapLike) => Promise<void>
   handleUserNameChange: (e: any) => void
+  handleInlineEnrollment: (e: any) => Promise<void>
 }
 
 export const useProductForm = (): ProductFormHook => {
   const [submitInFlight, setSubmitInFlight] = useState<boolean>(false)
+  const [isEnrolled, setIsEnrolled] = useState<boolean | null>(null)
+  const [sellerName, setSellerName] = useState<string>('')
   const [enrollmentStatusInFlight, setEnrollmentStatusInFlight] = useState<boolean>(false)
   const {
     categories,
@@ -65,19 +69,49 @@ export const useProductForm = (): ProductFormHook => {
   }
 
   const handleUserNameChange = debounce(async (e: any) => {
-    console.log(e.target.value);
+    const username = e.target.value
+    setSellerName(username)
+    if (e == '') {
+      setIsEnrolled(null)
+      setEnrollmentStatusInFlight(false)
+    }
     setEnrollmentStatusInFlight(true)
-    const resp = await fetch('http://localhost:3001/enroll/status/')
-    console.log(await resp.json())
+    const resp = await fetch(`http://localhost:3001/enroll/status/${username}`)
+    const json = await resp.json()
+    setIsEnrolled(json.isEnrolled)
     setEnrollmentStatusInFlight(false)
-  }, 500)
+  }, 400)
 
+  const handleInlineEnrollment = async () => {
+    setIsEnrolled(null)
+    setEnrollmentStatusInFlight(true)
+    try {
+      await fetch(`http://localhost:3001/enroll`, {
+        method: 'POST',
+        body: JSON.stringify({
+          sellerUsername: sellerName,
+          isEnrolled: true
+        }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      setEnrollmentStatusInFlight(false)
+      setIsEnrolled(true)
+    } catch (e) {
+      console.error(e)
+      setEnrollmentStatusInFlight(true)
+      setIsEnrolled(null)
+    }
+  }
 
   return {
     categories,
     inFlight: productsOrCategoriesInFlight || submitInFlight,
+    isEnrolled,
     enrollmentStatusInFlight,
     handleSubmit,
-    handleUserNameChange
+    handleUserNameChange,
+    handleInlineEnrollment
   }
 }

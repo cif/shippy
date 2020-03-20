@@ -4,19 +4,22 @@ import {
   Input,
   Button,
   Select,
-  Spin
+  Tooltip
 } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { LoadingOutlined, CheckCircleTwoTone } from '@ant-design/icons'
 import { useProductForm } from '../hooks/useProductForm'
 
 export const ProductForm: FunctionComponent = () => {
   const {
     categories,
     inFlight,
+    isEnrolled,
     enrollmentStatusInFlight,
     handleSubmit,
-    handleUserNameChange
+    handleUserNameChange,
+    handleInlineEnrollment
   } = useProductForm()
+
   return (
     <Form
       name="product"
@@ -29,22 +32,47 @@ export const ProductForm: FunctionComponent = () => {
         name="title"
         rules={[{ required: true, message: 'Title is required!' }]}
       >
-        <Input />
+        <Input autoComplete='off' />
       </Form.Item>
 
       <Form.Item
         label="Seller"
         name="seller"
         rules={[{ required: true, message: 'Seller is required!' }]}
+
       >
-        <Input onChange={(e: any) => {
-          e.persist()
-          handleUserNameChange(e)
-        }}
+        <Input
+          autoComplete='off'
+          onChange={(e: any) => {
+            e.persist()
+            handleUserNameChange(e)
+          }}
         />
       </Form.Item>
       <div>{enrollmentStatusInFlight && <LoadingOutlined style={{ fontSize: 24 }} spin />}</div>
-
+      {isEnrolled !== null &&
+        <div>
+          {isEnrolled &&
+            <div>
+              <CheckCircleTwoTone
+                twoToneColor="#52c41a"
+                className="icon"
+              /> <h4>Nice! This seller is enrolled in the program.</h4>
+            </div>
+          }
+          {!isEnrolled &&
+            <div>
+              <h4>That user is not enrolled yet...</h4>
+              <Button
+                type="default"
+                onClick={handleInlineEnrollment}
+              >
+                Enroll Now
+            </Button>
+            </div>
+          }
+        </div>
+      }
       <Form.Item
         label="Category"
         name="category"
@@ -66,7 +94,7 @@ export const ProductForm: FunctionComponent = () => {
         name="price"
         rules={[{ required: true, message: 'Seller is required!' }]}
       >
-        <Input style={{ width: 200 }} />
+        <Input autoComplete='off' style={{ width: 200 }} />
       </Form.Item>
 
       <Button

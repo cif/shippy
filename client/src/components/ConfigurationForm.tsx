@@ -36,7 +36,7 @@ export const ConfigurationForm: FunctionComponent = () => {
         name="minimumPrice"
         rules={[{ required: true, message: 'Required!' }]}
       >
-        <Input style={{ width: 200 }} />
+        <Input autoComplete='off' style={{ width: 200 }} />
       </Form.Item>
       <Form.Item
         label="Categories"
