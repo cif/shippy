@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { notification } from 'antd'
 import { MapLike } from './useProductForm'
+import { fetchy } from '../fetchy'
 
 export interface ShippingConfiguration {
   minimumPrice: number
@@ -20,7 +21,7 @@ export const useConfigurationForm = (): ConfigurationForm => {
   const updateConfiguration = async (data: MapLike) => {
     setInFlight(true)
     try {
-      const resp = await fetch('http://localhost:8080/products/config/', {
+      const resp = await fetchy('http://localhost:8080/products/config/', {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {
@@ -48,7 +49,7 @@ export const useConfigurationForm = (): ConfigurationForm => {
     // load the existing configuration
     const load = async () => {
       try {
-        const resp = await fetch('http://localhost:8080/products/config/')
+        const resp = await fetchy('http://localhost:8080/products/config/')
         setConfig(await resp.json())
         setInFlight(false)
       } catch (e) {

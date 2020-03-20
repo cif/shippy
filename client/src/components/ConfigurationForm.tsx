@@ -20,7 +20,11 @@ export const ConfigurationForm: FunctionComponent = () => {
   } = useProductForm()
 
   if (inFlight) {
-    return null
+    return (
+      <div id="config">
+        <h2>Loading configuration...</h2>
+      </div>
+    )
   }
   return (
     <Form

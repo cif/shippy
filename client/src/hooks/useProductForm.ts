@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react'
-import { ProductsContext, Product } from '../state/ProductsContext'
 import { notification } from 'antd'
 import debounce from 'debounce'
+import { ProductsContext, Product } from '../state/ProductsContext'
+import { fetchy } from '../fetchy'
 
 export type MapLike = {
   [key: string]: any
@@ -32,7 +33,7 @@ export const useProductForm = (): ProductFormHook => {
     setSubmitInFlight(true)
     try {
       // submit the product to the service
-      const productResponse = await fetch('http://localhost:8080/products/', {
+      const productResponse = await fetchy('http://localhost:8080/products/', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -76,7 +77,7 @@ export const useProductForm = (): ProductFormHook => {
       setEnrollmentStatusInFlight(false)
     }
     setEnrollmentStatusInFlight(true)
-    const resp = await fetch(`http://localhost:3001/enroll/status/${username}`)
+    const resp = await fetchy(`http://localhost:3001/enroll/status/${username}`)
     const json = await resp.json()
     setIsEnrolled(json.isEnrolled)
     setEnrollmentStatusInFlight(false)
@@ -86,7 +87,7 @@ export const useProductForm = (): ProductFormHook => {
     setIsEnrolled(null)
     setEnrollmentStatusInFlight(true)
     try {
-      await fetch(`http://localhost:3001/enroll`, {
+      await fetchy(`http://localhost:3001/enroll`, {
         method: 'POST',
         body: JSON.stringify({
           sellerUsername: sellerName,
