@@ -1,6 +1,7 @@
 
 import mysql from 'mysql'
-const conn = mysql.createConnection({
+
+export const conn = mysql.createConnection({
   host: process.env.MYSQL_HOST,
   user: 'shippy',
   password: 'getitdone',

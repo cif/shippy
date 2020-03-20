@@ -2,14 +2,14 @@ require('dotenv').config({
   path: `${__dirname}/../.env`
 })
 
-import express, { Response, NextFunction } from 'express'
+import express, { Express, Response, NextFunction } from 'express'
 import { getEnrollmentStatus, postEnrollment } from './handlers/enrollment'
 import body from 'body-parser'
 import async from 'express-async-handler'
 import { logger } from './util/logger'
 
 const log = logger('app:service')
-export const app = express()
+export const app: Express = express()
 
 // routes
 app.use(body.json())

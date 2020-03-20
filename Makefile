@@ -10,6 +10,7 @@ down:
 	@docker-compose -f docker-compose-run.yaml down
 
 test:
+	@docker-compose exec enrollment npm run test && \
 	export MYSQL_HOST=localhost && \
 	export REDIS_HOST=localhost && \
 	export ENROLLMENT_ENDPOINT=http://localhost:3001/enroll/status/ && \

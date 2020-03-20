@@ -1,11 +1,15 @@
 
 import request from 'supertest'
 import { app } from '../src/app'
+import { conn } from '../src/util/query'
 
 describe('enrollment', () => {
   const { floor, random } = Math
   const sellerUsername = `test.seller${floor(random() * 1000)}`
 
+  afterAll((done) => {
+    conn.end()
+  })
   test('it enrolls a seller', async () => {
     const { body } = await request(app)
       .post('/enroll')
@@ -18,7 +22,7 @@ describe('enrollment', () => {
   })
 
   test('validates enrollment correctly', async () => {
-    const { body } = await request(app)
+    await request(app)
       .post('/enroll')
       .send({
         sellerUsername,

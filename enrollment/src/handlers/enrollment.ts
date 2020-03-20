@@ -24,6 +24,7 @@ export const postEnrollment = async (req: Request, resp: Response) => {
     return resp
       .status(400)
       .json(validator.errors)
+      .end()
   }
 
   // escape values
@@ -57,6 +58,7 @@ export const postEnrollment = async (req: Request, resp: Response) => {
   resp
     .status(200)
     .json(req.body)
+    .end()
 }
 
 export const getEnrollmentStatus = async (req: Request, resp: Response) => {
@@ -72,6 +74,7 @@ export const getEnrollmentStatus = async (req: Request, resp: Response) => {
     resp.json({
       isEnrolled: false,
     })
+      .end()
     return
   }
 
@@ -81,4 +84,5 @@ export const getEnrollmentStatus = async (req: Request, resp: Response) => {
   resp.json({
     isEnrolled,
   })
+    .end()
 }
