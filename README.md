@@ -15,9 +15,10 @@ Wait for output on client service "You can now view client in the browser" in co
 open http://localhost:3000/
 ```
 
+
 ## Run Tests
 
-First, run all servcies in containers except the Spring app, see Learning Opportunity below
+Make sure all enrollment, mysql and redis are running. If you did the quick start they already are. If not, you can use:
 ```
 make up
 ```
@@ -40,13 +41,13 @@ make dev
 
 **`make run`** bring up mysql and redis, spring boot, enrollment express typescript app in dev mode, and react client dev server
 
-**`make up`** bring up all the services except for the spring app
+**`make up`** bring up all the services except for the spring app (*see below*)
 
-**`make down`** brings down all running service containers
-
-**`make dev`** runs spring boot on localhost (must have services up, see note below)
+**`make dev`** runs spring boot on localhost (*see below*)
 
 **`make clean`** runs clean install on spring app
+
+**`make down`** brings down all running service containers
 
 
 ## Design Principals
