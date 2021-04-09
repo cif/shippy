@@ -1,3 +1,7 @@
+## Context
+
+This was a project I was required to submit as part of an interview vs any kind of actual library or useful software, but it does exibit my full stack capability.
+
 ## Shippy
 
 Shippy is comprised of two servcies and React client.
